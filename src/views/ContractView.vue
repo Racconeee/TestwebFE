@@ -1,28 +1,37 @@
 <template>
-	<v-infinite-scroll height="400" @load="load">
-		<template v-for="(item, index) in items" :key="item">
-			<div :class="['pa-2', index % 2 === 0 ? 'bg-grey-lighten-2' : '']">
-				Item #{{ item }}
-			</div>
-		</template>
-		<template v-slot:empty>
-			<v-alert type="warning">No more items!</v-alert>
-		</template>
-	</v-infinite-scroll>
+	<div>
+		<div>ContractView 데이터 받아보자</div>
+		<button @click="emitEvent">Bitton</button>
+		<div>{{ title }}</div>
+		<div>{{ user }}</div>
+		<div>ContractView 구역 끝</div>
+	</div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { defineEmits } from 'vue';
+import { defineProps } from 'vue';
+import { watch } from 'vue';
 
-const items = ref(Array.from({ length: 10 }, (k, v) => v + 1));
+const props = defineProps({
+	title: String,
+	user: String,
+});
 
-const load = ({ done }) => {
-	setTimeout(() => {
-		done('empty'); // 'empty' 또는 'more'를 사용하여 상태를 설정
-	}, 1000);
+const emit = defineEmits(['updateTitle']);
+
+const emitEvent = () => {
+	emit('updateTitle', '변해버린 제목');
 };
+watch(
+	() => props.title,
+	newTitle => {
+		title.value = newTitle;
+	},
+);
+const title = ref(props.title);
+const user = props.user;
 </script>
 
-<style scoped>
-/* 스타일을 추가할 수 있습니다 */
-</style>
+<style></style>

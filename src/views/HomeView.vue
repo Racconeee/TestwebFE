@@ -1,33 +1,33 @@
 <template>
-	<div>
+	<v-app>
+		<TheHeader />
 		<v-container fluid>
-			<v-row dense>
-				<v-col v-for="(test, index) in Tests" :key="index" cols="12" md="4">
-					<v-card
-						:title="`Test : ${test.title}`"
-						:subtitle="`Subtitle for Content ${test.view}`"
-						:text="12"
-					></v-card>
-				</v-col>
-			</v-row>
+			<AppInfiniteScroller :load-more="loadMoreTests" />
 		</v-container>
-	</div>
+		<TheFooter />
+	</v-app>
 </template>
 
 <script setup>
+import AppInfiniteScroller from '@/components/app/AppInfiniteScroller.vue';
+
+import TheHeader from '@/layouts/TheHeader.vue';
+import TheFooter from '@/layouts/TheFooter.vue';
 import { useTestStore } from '@/store/TestStore';
-import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 
 const TestStore = useTestStore();
-const { loading, error, loadTests } = TestStore;
-const { Tests } = storeToRefs(TestStore);
+const { Tests, hasMore } = storeToRefs(TestStore);
 
-onMounted(async () => {
+const loadMoreTests = async () => {
+	if (!hasMore.value) return []; // 데이터가 더 이상 없으면 빈 배열 반환
+
 	try {
-		await loadTests();
+		await TestStore.loadTests();
+		return Tests.value; // 로드한 데이터 반환
 	} catch (error) {
-		console.error('Failed to load users:', error);
+		console.error('loadMoreTests Failed:', error);
+		return []; // 에러 발생 시 빈 배열 반환
 	}
-});
+};
 </script>

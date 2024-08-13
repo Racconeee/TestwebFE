@@ -1,15 +1,8 @@
 <template>
-	<v-app>
-		<TheHeader />
-		<router-view />
-		<TheFooter />
-	</v-app>
+	<router-view />
 </template>
 
-<script setup>
-import TheHeader from './layouts/TheHeader.vue';
-import TheFooter from './layouts/TheFooter.vue';
-</script>
+<script setup></script>
 
 <style scoped>
 /* 전체 레이아웃 스타일 설정 */

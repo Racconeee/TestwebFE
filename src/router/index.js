@@ -4,6 +4,8 @@ import PopularityView from '@/views/PopularityView.vue';
 import RecentView from '@/views/RecentView.vue';
 import InfoView from '@/views/InfoView.vue';
 import ContractView from '@/views/ContractView.vue';
+import AdminHomeView from '@/views/admin/AdminHomeView.vue';
+import CreateTestView from '@/views/admin/CreateTestView.vue';
 
 const routes = [
 	{
@@ -22,14 +24,26 @@ const routes = [
 		component: RecentView,
 	},
 	{
-		path: '/nfo',
+		path: '/info',
 		name: 'Info',
 		component: InfoView,
 	},
 	{
-		path: '/ontract',
+		path: '/contract',
 		name: 'Contract',
 		component: ContractView,
+	},
+	{
+		path: '/admin/home',
+		name: 'AdminHome',
+		component: AdminHomeView,
+
+		meta: { requiresHeader: false, requiresFooter: false },
+	},
+	{
+		path: '/admin/createTest',
+		name: 'CreateTest',
+		component: CreateTestView,
 	},
 ];
 
